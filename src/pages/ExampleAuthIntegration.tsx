@@ -40,7 +40,7 @@ export default function ExampleAuthIntegration() {
         setCode(code);
       }
     }
-  }, []);
+  }, [URLSearchParams, location.search]);
 
   const fetchAuthorizationCode = () => {
     window.location.replace(
@@ -93,7 +93,7 @@ export default function ExampleAuthIntegration() {
   return (
     <div className="grid gap-6">
       <h1 className="text-3xl font-normal underline decoration-q-red text-q-blue">
-        Add Example Integration to User and Fetch Pump data
+        Add Example Integration to User and Fetch Pump Data
       </h1>
 
       <section>
@@ -106,23 +106,21 @@ export default function ExampleAuthIntegration() {
           parameters:
           <div className="ml-4">
             <div>
-              {`client_id: ${CLIENT_ID}`}{" "}
+              {`- client_id: ${CLIENT_ID}`}{" "}
               <span className="text-q-red">(provided by Qvantum)</span>
             </div>
             <div>
-              {`redirect_uri: ${REDIRECT_URI}`}{" "}
+              {`- redirect_uri: ${REDIRECT_URI}`}{" "}
               <span className="text-q-red">
                 (needs to be verified by Qvantum)
               </span>
             </div>
-            <div>{`state: ${STATE}`}</div>
+            <div>{`- state: ${STATE}`}</div>
             <div />
           </div>
-          <div>{`Complete url: ${QACCOUNT_URL}/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`}</div>
+          <div>{`Complete redirect url: ${QACCOUNT_URL}/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`}</div>
         </div>
-        {location.search && (
-          <Step.Body>{`Response url: ${window.location.href}`}</Step.Body>
-        )}
+        {location.search && <Step.Body>{window.location.href}</Step.Body>}
       </section>
 
       <section>
@@ -183,8 +181,8 @@ export default function ExampleAuthIntegration() {
                 <div key={pump.serial}>
                   {"{"}
                   <div className="ml-10">
-                    <div>{pump.productName},</div>
-                    <div>{pump.serial ?? "KDIWBOIPO34932,"}</div>
+                    <div>{`productName: ${pump.productName}`},</div>
+                    <div>{`serial: ${pump.serial ?? "-"},`}</div>
                   </div>
                   {"},"}
                 </div>
@@ -200,6 +198,7 @@ export default function ExampleAuthIntegration() {
         onClick={() => {
           setCode(null);
           setToken(null);
+          setPumpData(null);
           navigate("/", { replace: true });
         }}
       />
