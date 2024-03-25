@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 import Step from "../components/Step";
 import Button from "../components/Button";
@@ -44,6 +45,7 @@ export default function ExampleAuthIntegration() {
     apiCall: Promise<T | APIError | undefined>,
     successCallback: (data: T) => void
   ): Promise<void> => {
+    setError(null);
     const response = await apiCall;
     if (response) {
       if (typeof response === "object" && "message" in response) {
@@ -53,7 +55,6 @@ export default function ExampleAuthIntegration() {
       }
     }
   };
-
 
   const getOathToken = () => {
     handleApiResponse(
@@ -78,13 +79,19 @@ export default function ExampleAuthIntegration() {
     );
   };
 
+  // add toast notification if error occurs
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+
   return (
     <div className="grid gap-6">
       <h1 className="text-3xl font-normal underline decoration-q-red text-q-blue">
         Add Example Integration to User and Fetch Pump Data
       </h1>
-
-      {error && <div className="text-q-red">{error}</div>}
 
       <section>
         <div className="flex gap-4 mb-2 items-center">
@@ -270,9 +277,11 @@ export default function ExampleAuthIntegration() {
           setToken(null);
           setPumpData(null);
           setSettings(null);
+          setError(null);
           navigate("/", { replace: true });
         }}
       />
+      <Toaster position="bottom-center" />
     </div>
   );
 }
