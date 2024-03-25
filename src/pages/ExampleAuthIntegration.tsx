@@ -71,7 +71,7 @@ export default function ExampleAuthIntegration() {
 
   const fetchPumpData = async () => {
     try {
-      const response = await fetch("/api/inventory/v0/user-heatpumps", {
+      const response = await fetch("/api/inventory/v1/user-heatpumps", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
