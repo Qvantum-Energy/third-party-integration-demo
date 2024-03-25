@@ -8,9 +8,8 @@ export default defineConfig({
     proxy: {
       // DEV
       "/api": {
-        target: "https://wzs7q0w54i.execute-api.eu-north-1.amazonaws.com",
+        target: "https://api.qvantum-test.com/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

@@ -50,7 +50,7 @@ export default function ExampleAuthIntegration() {
 
   const fetchOathToken = async () => {
     try {
-      const response = await fetch("/api/auth/v0/oauth2/token", {
+      const response = await fetch("/api/auth/v1/oauth2/token", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
