@@ -17,7 +17,7 @@ export default function ExampleAuthIntegration() {
   const navigate = useNavigate();
   const [URLSearchParams] = useSearchParams();
   const [clientId, setClientId] = useState<string>(constants.CLIENT_ID);
-  const [userId, setUserId] = useState<string>(constants.USER_ID);
+  const [userId, setUserId] = useState<string>("");
   const [code, setCode] = useState<string | null>(null);
 
   const [token, setToken] = useState<Token | null>(null);
@@ -64,7 +64,7 @@ export default function ExampleAuthIntegration() {
   };
 
   const getAllUserPumps = () => {
-    if (!token) return;
+    if (!token || !userId) return;
     handleApiResponse(
       apiService.fetchUserPumps(token, userId),
       setPumpData
@@ -179,6 +179,9 @@ export default function ExampleAuthIntegration() {
             Enter userId: &nbsp;
             <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} className="border border-q-blue-60 rounded px-2" />
           </label>
+          <span className="text-q-red ml-2">
+            (same as the one used to sign in to Qvantum Account)
+          </span>
         </div>
         {pumpData && (
           <Step.Body>
