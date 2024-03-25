@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-import Step from "../components/Step";
-import Button from "../components/Button";
-import { APIError, Pump, PumpSettingsResponse, Token } from "../interfaces";
 import { apiService } from "../api";
+import Button from "../components/Button";
+import Step from "../components/Step";
 import { constants } from "../constants";
-
-
-
-
+import { APIError, Pump, PumpSettingsResponse, Token } from "../interfaces";
 
 export default function ExampleAuthIntegration() {
   const location = useLocation();
   const navigate = useNavigate();
   const [URLSearchParams] = useSearchParams();
+
   const [clientId, setClientId] = useState<string>(constants.CLIENT_ID);
   const [userId, setUserId] = useState<string>("");
   const [code, setCode] = useState<string | null>(null);
-
   const [token, setToken] = useState<Token | null>(null);
   const [pumpData, setPumpData] = useState<Pump[] | null>(null);
   const [settings, setSettings] = useState<PumpSettingsResponse | null>(null);
@@ -35,7 +31,26 @@ export default function ExampleAuthIntegration() {
     }
   }, [URLSearchParams, location.search]);
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    // Fetch user ID after receiving token
+    if (token) {
+      handleApiResponse(
+        apiService.fetchTokenUser(token),
+        ({uid}) => {
+          setUserId(uid);
+        }
+      )
+    }
+  }, [token]);
+
   const redirectToAccountSite = () => {
+    // Redirect to Qvantum Account website for authorization
     window.location.replace(
       `${constants.QACCOUNT_URL}/authorize?client_id=${clientId}&redirect_uri=${constants.REDIRECT_URI}&state=${constants.STATE}`
     );
@@ -79,18 +94,11 @@ export default function ExampleAuthIntegration() {
     );
   };
 
-  // add toast notification if error occurs
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
-
 
   return (
     <div className="grid gap-6">
       <h1 className="text-3xl font-normal underline decoration-q-red text-q-blue">
-        Add Example Integration to User and Fetch Pump Data
+        Add Example Integration to TokenUser and Fetch Pump Data
       </h1>
 
       <section>
@@ -176,8 +184,8 @@ export default function ExampleAuthIntegration() {
         </div>
         <div>
           <label>
-            Enter userId: &nbsp;
-            <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} className="border border-q-blue-60 rounded px-2" />
+            userId: &nbsp;
+            <input type="text" value={userId} readOnly className="border border-q-blue-60 rounded px-2" />
           </label>
           <span className="text-q-red ml-2">
             (same as the one used to sign in to Qvantum Account)

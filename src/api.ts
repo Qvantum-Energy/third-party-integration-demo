@@ -1,6 +1,25 @@
-import { DevicesResponse, APIError, Pump, PumpSettingsResponse, Token } from "./interfaces";
+import { DevicesResponse, APIError, Pump, PumpSettingsResponse, Token, TokenUser } from "./interfaces";
 
 const API_HOST = import.meta.env.PROD ? 'https://api.qvantum.com' : '';
+
+const fetchTokenUser = async (token: Token) =>{
+  try {
+    const response = await fetch(`${API_HOST}/api/auth/v1/whoami`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.access_token}`,
+      }
+    });
+
+    if (response.ok) {
+      return await response.json() as TokenUser;
+    } 
+    return await response.json() as APIError;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 const fetchOathToken = async (clientId: string, code: string): Promise<Token | APIError | undefined> => {
   console.log(code)
@@ -16,7 +35,7 @@ const fetchOathToken = async (clientId: string, code: string): Promise<Token | A
     if (response.ok) {
       return await response.json() as Token;
     } 
-    return await response.json() as Error;
+    return await response.json() as APIError;
   } catch (e) {
     console.log(e);
   }
@@ -37,7 +56,7 @@ const fetchUserPumps = async (token: Token, userId: string): Promise<Pump[] | AP
       const res = await response.json() as DevicesResponse
       return res.devices;
     } 
-    return await response.json() as Error;
+    return await response.json() as APIError;
   } catch (error) {
     console.log(error);
   }
@@ -56,7 +75,7 @@ const fetchPumpSettings = async (token: Token, deviceId: string): Promise<PumpSe
     if (response.ok) {
       return await response.json()  as PumpSettingsResponse
     } 
-    return await response.json() as Error;
+    return await response.json() as APIError;
   } catch (error) {
     console.log(error);
   }
@@ -65,6 +84,7 @@ const fetchPumpSettings = async (token: Token, deviceId: string): Promise<PumpSe
 
 
 export const apiService = {
+  fetchTokenUser,
   fetchOathToken,
   fetchUserPumps,
   fetchPumpSettings,

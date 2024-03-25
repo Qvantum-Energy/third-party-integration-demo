@@ -39,5 +39,12 @@ export type APIError = {
   message: string;
 }
 
+export type TokenUser = {
+  email: string;
+  isQvantum: boolean;
+  uid: string;
+  you: string;
+}
+
 
 
