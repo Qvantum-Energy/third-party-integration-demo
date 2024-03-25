@@ -7,7 +7,7 @@ export default function Header() {
         <img src={QvantumLogo} alt="Qvantum logo" width={40} />
         <div className="text-white uppercase text-2xl">QVANTUM</div>
       </div>
-      <div className="text-white text-3xl">Test Client API</div>
+      <div className="text-white text-3xl">Integration API Test Client</div>
     </header>
   );
 }
