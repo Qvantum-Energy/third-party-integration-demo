@@ -1,13 +1,13 @@
-import QvantumLogo from "../assets/Qvantumlogo_white.svg";
+import QvantumLogo from '../assets/Qvantumlogo_white.svg';
 
 export default function Header() {
   return (
-    <header className="p-4 flex justify-between w-full bg-q-blue sticky top-0">
-      <div className="flex space-x-5 items-center">
+    <header className="sticky top-0 flex w-full justify-between bg-q-blue p-4">
+      <div className="flex items-center space-x-5">
         <img src={QvantumLogo} alt="Qvantum logo" width={40} />
-        <div className="text-white uppercase text-2xl">QVANTUM</div>
+        <div className="text-2xl uppercase text-white">QVANTUM</div>
       </div>
-      <div className="text-white text-3xl">Integration API Test Client</div>
+      <div className="text-3xl text-white">Integration API Test Client</div>
     </header>
   );
 }

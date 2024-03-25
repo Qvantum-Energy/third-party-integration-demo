@@ -7,7 +7,7 @@ export default function Button({ label, onClick, disabled }: ButtonProps) {
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="bg-q-blue/80 rounded text-white py-1 px-2 hover:bg-q-blue transition-colors w-fit disabled:bg-q-blue-40"
+      className="w-fit rounded bg-q-blue/80 px-2 py-1 text-white transition-colors hover:bg-q-blue disabled:bg-q-blue-40"
     >
       {label}
     </button>

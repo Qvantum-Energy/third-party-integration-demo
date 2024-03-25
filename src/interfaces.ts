@@ -16,35 +16,32 @@ export type Pump = {
 export type DevicesResponse = {
   user_id: string;
   devices: Pump[];
-}
+};
 
-type Meta ={
+type Meta = {
   last_reported: string;
   validity: string;
   valid_until: string;
-}
+};
 
 type Setting = {
   name: string;
   value: number | string;
   read_only: boolean;
-}
+};
 
 export type PumpSettingsResponse = {
   meta: Meta;
   settings: Setting[];
-}
+};
 
 export type APIError = {
   message: string;
-}
+};
 
 export type TokenUser = {
   email: string;
   isQvantum: boolean;
   uid: string;
   you: string;
-}
-
-
-
+};
