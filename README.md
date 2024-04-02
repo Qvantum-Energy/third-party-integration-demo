@@ -10,7 +10,7 @@ These instructions will guide you on how to get a copy of this project up and ru
 
 Ensure that you have the following installed on your local machine:
 
-- [Node.js](https://nodejs.org/) 
+- [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
 
 ### Installation
@@ -18,21 +18,25 @@ Ensure that you have the following installed on your local machine:
 First, clone the repository to your local machine:
 
 ```bash
-git clone GITHUB_URL_HERE
+git clone https://github.com/Qvantum-Energy/third-party-integration-demo
 ```
 
 Navigate to the project directory:
+
 ```bash
-cd GITHUB_REPO_NAME_HERE
+cd third-party-integration-demo
 ```
 
 Then, install the project dependencies:
+
 ```bash
 npm install
 ```
 
 ### Running the application
+
 Then, install the project dependencies:
+
 ```bash
 npm run dev
 ```
