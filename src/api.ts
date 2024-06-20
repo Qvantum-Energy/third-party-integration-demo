@@ -22,14 +22,13 @@ const fetchTokenUser = async (token: Token) => {
 };
 
 const fetchOathToken = async (clientId: string, code: string): Promise<Token | APIError | undefined> => {
-  console.log(code);
   try {
     const response = await fetch(`${API_HOST}/api/auth/v1/oauth2/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `clientId=${clientId}&grant_type=authorization_code&code=${code}`,
+      body: `client_id=${clientId}&grant_type=authorization_code&code=${code}`,
     });
 
     if (response.ok) {

@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // DEV
       '/api': {
-        target: 'https://api.qvantum-test.com/',
+        target: 'https://api.qvantum.com/',
         changeOrigin: true,
       },
     },
