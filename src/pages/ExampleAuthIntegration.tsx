@@ -42,10 +42,10 @@ const AuthorizationStep = ({
             {`- redirect_uri: ${constants.REDIRECT_URI}`}{' '}
             <span className="text-q-red">(needs to be verified by Qvantum)</span>
           </div>
-          <div>{`- state: ${constants.STATE}`}</div>
+          <div>{`- state?: ${constants.STATE}`}</div>
           <div />
         </div>
-        <div>{`Complete redirect url: ${constants.QACCOUNT_URL}/authorize?client_id=${clientId}&redirect_uri=${constants.REDIRECT_URI}&state=${constants.STATE}`}</div>
+        <div>{`Complete redirect url: ${constants.QACCOUNT_URL}/authorize?client_id=${clientId}&redirect_uri=${constants.REDIRECT_URI}`}</div>
       </div>
       {location.search && <Step.Body>{window.location.href}</Step.Body>}
     </section>
@@ -261,8 +261,10 @@ export default function ExampleAuthIntegration() {
   useEffect(() => {
     // Fetch user ID after receiving token
     if (token) {
-      handleApiResponse(apiService.fetchTokenUser(token), ({ uid }) => {
-        setUserId(uid);
+      console.log(token);
+      handleApiResponse(apiService.fetchTokenUser(token), user => {
+        console.log(user);
+        setUserId(user.firebase_id);
       });
     }
   }, [token]);
@@ -270,7 +272,7 @@ export default function ExampleAuthIntegration() {
   const redirectToAccountSite = () => {
     // Redirect to Qvantum Account website for authorization
     window.location.replace(
-      `${constants.QACCOUNT_URL}/authorize?client_id=${clientId}&redirect_uri=${constants.REDIRECT_URI}&state=${constants.STATE}`
+      `${constants.QACCOUNT_URL}/authorize?client_id=${clientId}&redirect_uri=${constants.REDIRECT_URI}${constants.STATE ? `&state=${constants.STATE}` : ''}`
     );
   };
 
@@ -284,6 +286,7 @@ export default function ExampleAuthIntegration() {
       if (typeof response === 'object' && 'message' in response) {
         setError((response as APIError).message);
       } else {
+        console.log(response);
         successCallback(response as T);
       }
     }

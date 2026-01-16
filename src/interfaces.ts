@@ -42,6 +42,8 @@ export type APIError = {
 export type TokenUser = {
   email: string;
   isQvantum: boolean;
-  uid: string;
+  quid: string;
+  firebase_id: string;
+  tags: string[];
   you: string;
 };

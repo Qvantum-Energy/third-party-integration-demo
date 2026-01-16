@@ -1,6 +1,6 @@
 import { DevicesResponse, APIError, Pump, PumpSettingsResponse, Token, TokenUser } from './interfaces';
 
-const API_HOST = import.meta.env.PROD ? 'https://api.qvantum.com' : 'http://localhost:5172';
+const API_HOST = import.meta.env.PROD ? 'https://api.qvantum.com' : '';
 
 const fetchTokenUser = async (token: Token) => {
   try {
